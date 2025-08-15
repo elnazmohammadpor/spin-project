@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        background-color: rgb(0, 0, 0);
+    }
+    .spin {
+        width: 500px;
+        height: 500px;
+        margin: 100px auto;
+        position: relative;
+        /* border: 2px solid blue; */
+        >img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: 8s;
+        }
+        &::after {
+            content: '';
+            display: flex; 
+            width: 50px;
+            height: 100px;
+            background-color: goldenrod;
+            position: absolute;
+            clip-path: polygon(0 0 , 100% 0, 50% 100%);
+            left: 50%;
+            top: -50px;
+            transform: translateX(-50%);
+        }
+        >button {
+            position: absolute;
+            z-index: 999;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: goldenrod;
+        }
+    }
+</style>
+<body>
+    <div class="spin">
+        <img src="img/spin.webp" alt="">
+        <button id="chance">بزن بچرخیم</button>
+    </div>
+</body>
+<script>
+    const gifts =  ['0% تخفیف','10% تخفیف','شانش مجدد چرخش گردونه','بن خرید 1 میلیونی','5% تخفیف','🍌','15% تخفیف','بن خرید 2 میلیونی','🍌','20% تخفیف']
+    const _chance = document.getElementById('chance')
+    const _myImg = document.querySelector('.spin>img')
+
+    _chance.addEventListener('click', ()=>{
+
+        let myRandNum  = (Math.floor(Math.random()*360)) 
+        console.log(myRandNum)
+        let winner = gifts[parseInt(myRandNum/36)]
+        console.log(winner)
+        _myImg.style.transform='rotate(-'+((myRandNum+3600)-18)+'deg)' 
+        
+        setTimeout(()=>{
+          alert('شما برنده ی ' + winner + ' شدید!🎉' )
+
+          _myImg.style.transition= '1s'
+          _myImg.style.transform= 'rotate(0deg)' //reset
+          setTimeout(()=>{
+            _myImg.style.transition= '8000'
+          },1000);
+        },9000);
+    })
+</script>
+</html>
